@@ -18,7 +18,7 @@ const App = () => {
       return (
         <div className="movie-wrapper" key={i}>
           <div className="movie-title">{movie.title}</div>
-          <img className="movie-image" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+          <img className="movie-image" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
           <div className="movie-date">📅 {movie.release_date}</div>
           <div className="movie-rate">⭐ {movie.vote_average}</div>
         </div>
@@ -26,10 +26,14 @@ const App = () => {
     });
   };
 
-  const search =async (q) => {
-    if (q.length > 3){
-      const query =await searchMovie(q)
-      setPopularMovies(query.result)
+  const search = async (q) => {
+    if (q.length > 3) {
+      try {
+        const query = await searchMovie(q);
+        setPopularMovies(query.results);
+      } catch (error) {
+        console.error("Error searching movies: ", error);
+      }
     }
   };
 

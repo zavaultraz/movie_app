@@ -9,8 +9,11 @@ export const getMovieList = async () => {
 }
 
 export const searchMovie = async (q) => {
-    
-        const search = await axios.get(`${baseUrl}/search/movie?query=query=${q}&api_key=?${apiKey}`);
-        return search.data
-    
+    try {
+        const response = await axios.get(`${baseUrl}/search/movie?query=${q}&api_key=${apiKey}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error searching movie: ", error);
+        throw error;
+    }
 };
